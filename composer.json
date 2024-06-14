@@ -1,0 +1,31 @@
+{
+    "name": "alphansotech/livestreaming",
+    "description": "The Wowza LiveStreaming Package For Laravl Framework.",
+    "keywords": ["library", "laravel" "Wowza"],
+    "authors": [
+        {
+            "name": "Alphanso Tech",
+            "email": "dev@alphansotech.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "AlphansoTech\\LiveStreaming\\": "src/"
+        },
+        "files":[
+            "src/Helper.php"
+        ]
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^7.2",
+        "intervention/image": "^2.7"
+    },
+    "extra":{
+        "laravel":{
+            "providers":[
+                "AlphansoTech\\LiveStreaming\\LiveStreamingServicesProvider"
+            ]
+        }
+    }
+}
