@@ -1,7 +1,7 @@
 {
     "name": "alphansotech/livestreaming",
     "description": "The Wowza LiveStreaming Package For Laravl Framework.",
-    "keywords": ["library", "laravel" "Wowza"],
+    "keywords": ["library", "laravel", "Wowza"],
     "authors": [
         {
             "name": "Alphanso Tech",
