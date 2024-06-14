@@ -1,0 +1,16 @@
+{
+    "name": "alphansotech/livestreaming",
+    "autoload": {
+        "psr-4": {
+            "AlphansoTech\\LiveStreaming\\": "src/"
+        },
+        "files":[
+            "src/Helper.php"
+        ]
+    },
+    "minimum-stability": "dev",
+    "require": {         
+        "intervention/image": "^2.7"
+        
+    }
+}
