@@ -1,6 +1,8 @@
 {
     "name": "alphanso-tech/livestreaming",
     "description": "The Wowza LiveStreaming Package For Laravl Framework.",
+    "license": "MIT",
+    "type": "library",
     "keywords": ["library", "laravel", "Wowza"],
     "authors": [
         {
