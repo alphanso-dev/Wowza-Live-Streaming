@@ -305,6 +305,202 @@ class LiveStreamingController
 
         return $response;   
     }
+
+
+    /* Start stream */
+
+    public function StartLiveStream($stream_id,$wowza_id){
+
+        $streamData   = $this->GetSingleLiveStream($stream_id, $wowza_id);
+        if(empty($streamData['data'])){
+             $response =  generateResponse(false,202,'Live stream not found.');
+             return $response;
+        }
+
+        if(!isset($streamData['data']['wowza_data']->live_stream)){
+            $response =  generateResponse(false,202,$streamData['data']['wowza_data']->meta->message);
+             return $response;
+        }
+
+        $streamStatusUrl       = "/live_streams/$wowza_id/state";
+        $streamStatusResponce  = RunApi($streamStatusUrl, "GET");
+        $streamStatus          = $streamStatusResponce->live_stream->state;
+            
+        if($streamData['status'] == true && isset($streamStatus) && $streamStatus == 'started'){  
+            $response =  generateResponse(false,202,'Live stream already started.');
+            return $response;
+        }
+        
+        if($streamData['status'] == true && isset($streamStatus) && $streamStatus == 'stopped'){
+
+            /*Live Stream Start Wowza*/
+
+            $url = "/live_streams/$wowza_id/start";
+            $liveStream = RunApi($url, "PUT");
+
+            do{
+                $streamStatusResponce  = RunApi($streamStatusUrl, "GET");
+
+            }while ($streamStatusResponce->live_stream->state != 'started');
+            
+            $response =  generateResponse(true,200,'Live stream started successully.');
+            
+        }else{
+        
+            $response =  generateResponse(false,202,'Please Try Again.');
+        }
+
+        return $response;
+
+    }
+
+    /*Publish Live Stream*/
+
+    public function PublishStream($stream_id,$wowza_id){
+
+        $streamData   = $this->GetSingleLiveStream($stream_id, $wowza_id);
+        if(empty($streamData['data'])){
+             $response =  generateResponse(false,202,'Live stream not found.');
+             return $response;
+        }
+
+        if(!isset($streamData['data']['wowza_data']->live_stream)){
+            $response =  generateResponse(false,202,$streamData['data']['wowza_data']->meta->message);
+            return $response;
+        }
+
+        $streamStatusUrl       = "/live_streams/$wowza_id/state";
+        $streamStatusResponce  = RunApi($streamStatusUrl, "GET");
+        $streamStatus          = $streamStatusResponce->live_stream->state;
+        if(isset($streamStatus) && $streamStatus == 'stopped' ){
+            $response =  generateResponse(false,202,'Live Streaming is not started please try again.');
+            return $response;
+        }
+
+        if(isset($streamStatus)){
+            if($streamStatus == 'started' || $streamStatus == '' ){
+                do{
+                    $streamStatus  = RunApi($streamStatusUrl, "GET");
+
+                } while ($streamStatus->live_stream->state != 'started');
+                
+                $inputStore = ['state' => 'started', 'stream_status' => 1];
+
+                $update = $this->LiveStreamModel->UpdateData($inputStore,$stream_id,$wowza_id);  
+
+
+                $response =  generateResponse(true,200,'Live stream published.');
+                    
+            } else {
+                
+                $response =  generateResponse(false,202,'Live Streaming is not started please try again.');
+            }
+
+        }else{
+            
+            $response =  generateResponse(false,202,'Live Streaming is not started please try again.');
+        }
+
+            return $response;
+    }
+
+
+       /*Stop Live Stream*/
+
+    public function StopLiveStream($stream_id,$wowza_id){
+
+        $streamData   = $this->GetSingleLiveStream($stream_id, $wowza_id);
+        
+        if(empty($streamData['data'])){
+             $response =  generateResponse(false,202,'Live stream not found.');
+             return $response;
+        }
+
+        if(!isset($streamData['data']['wowza_data']->live_stream)){
+            $response =  generateResponse(false,202,$streamData['data']['wowza_data']->meta->message);
+            return $response;
+        }
+
+        $streamStatusUrl       = "/live_streams/$wowza_id/state";
+        $streamStatusResponce  = RunApi($streamStatusUrl,"GET");
+        $streamStatus          = $streamStatusResponce->live_stream->state;
+        
+        if(isset($streamStatus) && $streamStatus == 'stopped' ){
+            $response =  generateResponse(false,202,'Live stream already stopped.');
+            return $response;
+        }
+
+
+        $stopLiveStreamurl          = "/live_streams/$wowza_id/stop";
+        $streamStopData             = RunApi($stopLiveStreamurl,"PUT");
+
+        if(isset($streamStopData->live_stream) && $streamStopData->live_stream->state == 'stopped'){
+    
+            $inputdata = ['state' => 'stopped', 'stream_status' => 0, 'advertisement_status' => 0];
+
+            $updateData = $this->LiveStreamModel->UpdateData($inputdata, $stream_id, $wowza_id);
+
+            if($updateData){
+                    
+                $response =  generateResponse(true,200,'Live stream stopped.');
+                
+            }else{
+                
+                $response =  generateResponse(false,202,'Live stream not stopped, please try again.');
+            }
+
+        }else{
+
+            $response =  generateResponse(false,202,$streamStopData->meta->message);
+        }
+
+        return  $response;
+
+    }
+
+    /*Live Stream Statistics*/
+
+    public function LiveStreamStatistics($stream_id, $wowza_id){
+        
+        $streamData   = $this->GetSingleLiveStream($stream_id, $wowza_id);
+
+        if(empty($streamData['data'])){
+             $response =  generateResponse(false,202,'Live stream not found.');
+             return $response;
+        }
+
+        if(!isset($streamData['data']['wowza_data']->live_stream)){
+            $response =  generateResponse(false,202,$streamData['data']['wowza_data']->meta->message);
+            return $response;
+        }
+
+        $ingestUrl    = "/analytics/ingest/live_streams/$wowza_id";
+        $viewerUrl    = "/analytics/viewers/live_streams/$wowza_id";
+        
+        $ingestoutput = RunApi($ingestUrl, "GET");
+        $vieweroutput = RunApi($viewerUrl, "GET");
+
+
+
+       if(isset($ingestoutput->live_stream) && isset($vieweroutput->live_stream)){
+            $outputData = [
+                'inbound' => $ingestoutput->live_stream->connected->value,
+                'inbound_bit_rate' => $ingestoutput->live_stream->bytes_in_rate->value,
+                'frame_size' => $ingestoutput->live_stream->frame_size->value,
+                'frame_rate' => $ingestoutput->live_stream->frame_rate->value,
+                'keyframe_interval' => $ingestoutput->live_stream->keyframe_interval->value,
+                'unique_views' => $vieweroutput->live_stream->viewers
+            ];
+        
+            $response =  generateResponse(true,200,'Statistic details Found.',$outputData);
+
+        }else{
+            $response =  generateResponse(false,202,'Statistic details not found.');
+        }
+
+        return $response;
+    }
+
 }
 
 

@@ -126,4 +126,64 @@ class LiveStreamingFunction {
         return $response;
     }
 
+    /* Start stream */
+
+    public function StartLiveStream($stream_id, $wowza_id){
+        
+        if(!isset($stream_id) && !is_numeric($stream_id)){
+            $response =  generateResponse(false,202,'stream id is missing or pass properly.');       
+            return $response; 
+        }
+
+        $response = $this->LiveStream->StartLiveStream($stream_id, $wowza_id);
+        
+        return $response;        
+    }
+    /*Publish Live Stream*/
+
+    
+
+    public function PublishStream($stream_id, $wowza_id){
+    
+        if(!isset($stream_id) && !is_numeric($stream_id)){
+            $response =  generateResponse(false,202,'stream id is missing or pass properly.');       
+            return $response; 
+        }
+
+        $response = $this->LiveStream->PublishStream($stream_id, $wowza_id);
+        
+        return $response;        
+    }
+
+    /*Sotop Live Stream*/    
+
+    public function StopLiveStream($stream_id,$wowza_id){
+
+        if(!isset($stream_id) && !is_numeric($stream_id)){
+            $response =  generateResponse(false,202,'stream id is missing or pass properly.');       
+            return $response; 
+        }
+
+        $response = $this->LiveStream->StopLiveStream($stream_id,$wowza_id);
+        
+        return $response;        
+    
+    }
+
+    /*Live Stream Statistics*/
+    
+    public function LiveStreamStatistics($stream_id,$wowza_id){
+
+        if(!isset($stream_id) && !is_numeric($stream_id)){
+            $response =  generateResponse(false,202,'stream id is missing or pass properly.');       
+            return $response; 
+        }
+
+        $response = $this->LiveStream->LiveStreamStatistics($stream_id,$wowza_id);
+        
+        return $response;        
+    
+    }
+
+
 }
