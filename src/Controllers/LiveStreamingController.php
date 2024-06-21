@@ -19,9 +19,9 @@ class LiveStreamingController
     public function BroadcastLocationList()
     {
         
-        $broadcastLocationList = BroadcastLocation();
+        $broadcastLocationList = ATLSP_BroadcastLocation();
         
-        $response =  generateResponse(true,200,'Broadcast Location List.',$broadcastLocationList);
+        $response =  ATLSP_generateResponse(true,200,'Broadcast Location List.',$broadcastLocationList);
         return $response;
     }
 
@@ -30,9 +30,9 @@ class LiveStreamingController
     public function CameraEncoderList()
     {
         
-        $cameraEncoderList = CameraEncoder();
+        $cameraEncoderList = ATLSP_CameraEncoder();
         
-        $response =  generateResponse(true,200,'Camera Encoder List.',$cameraEncoderList);
+        $response =  ATLSP_generateResponse(true,200,'Camera Encoder List.',$cameraEncoderList);
         return $response;
     }
 
@@ -44,11 +44,11 @@ class LiveStreamingController
         $input = $request;
         /*Check Validation*/
 
-        $validateInputs = RequestValidation($request, 'store');
+        $validateInputs = ATLSP_RequestValidation($request, 'store');
 
         if($validateInputs['status'] == false){
 
-            $response =  generateResponse(false,422,$validateInputs['message'],$validateInputs['data']);
+            $response =  ATLSP_generateResponse(false,422,$validateInputs['message'],$validateInputs['data']);
             return $response;
             
         }
@@ -73,13 +73,13 @@ class LiveStreamingController
             
         $url = "/live_streams";
 
-        $stremCreate = RunApi($url,"POST",$inputdata);
+        $stremCreate = ATLSP_RunApi($url,"POST",$inputdata);
 
         if(isset($stremCreate->live_stream)) {
             
             $outputData = $stremCreate->live_stream;
 
-            $stream_id                  = (int)RendomString(10, 'number');
+            $stream_id                  = (int)ATLSP_RendomString(10, 'number');
             $input['stream_id']         = $stream_id;
             $input['wowza_id']          = $outputData->id;
             $input['state']             = $outputData->state;
@@ -92,7 +92,7 @@ class LiveStreamingController
             $storage_disk = 'public';
 
             if (isset($input['image'])) {
-                $image_name = UploadCustomeImage($input['image'],$stream_id,$storage_disk, 'stream_image', 'stream_image', 'crop', 640, 360);
+                $image_name = ATLSP_UploadCustomeImage($input['image'],$stream_id,$storage_disk, 'stream_image', 'stream_image', 'crop', 640, 360);
             }
 
 
@@ -106,24 +106,24 @@ class LiveStreamingController
 
             if(isset($createLiveStremDB->wowza_id)) {
                 
-                 $response =  generateResponse(true,200,'Live Stream created successully.');
+                 $response =  ATLSP_generateResponse(true,200,'Live Stream created successully.');
                  
             }else{
 
                 /* Remove Stream From Wowza */
 
                 $url = "/live_streams/$outputData->id";
-                $removeStream = RunApi($url, "DELETE");
+                $removeStream = ATLSP_RunApi($url, "DELETE");
 
-                $response =  generateResponse(false,202,'Live Stream not crete please try again.');
+                $response =  ATLSP_generateResponse(false,202,'Live Stream not crete please try again.');
             }
         }else if(isset($stremCreate->meta)){
             
-            $response =  generateResponse(false,$stremCreate->meta->status,$stremCreate->meta->message);
+            $response =  ATLSP_generateResponse(false,$stremCreate->meta->status,$stremCreate->meta->message);
             
         }else{
             
-            $response =  generateResponse(false,202,'Live Stream not creted please try again');            
+            $response =  ATLSP_generateResponse(false,202,'Live Stream not creted please try again');            
         }
         
         return $response;
@@ -143,9 +143,9 @@ class LiveStreamingController
 
         if(count($streamList) > 0){
             
-            $response =  generateResponse(true,200,'Stream List.',$streamList);
+            $response =  ATLSP_generateResponse(true,200,'Stream List.',$streamList);
         }else{
-            $response =  generateResponse(false,202,'Stream List Not available.');
+            $response =  ATLSP_generateResponse(false,202,'Stream List Not available.');
         }   
         
         return $response;    
@@ -161,16 +161,16 @@ class LiveStreamingController
         if(!is_null($streamData)){
 
             $url = "/live_streams/$wowza_id";
-            $wowzaData = RunApi($url, "GET");
+            $wowzaData = ATLSP_RunApi($url, "GET");
             
             $data['stream_detail']  = $streamData;
             $data['wowza_data']     = $wowzaData;
             
-            $response =  generateResponse(true,200,'Stream Detail.',$data);
+            $response =  ATLSP_generateResponse(true,200,'Stream Detail.',$data);
 
         }else{
             
-            $response =  generateResponse(false,202,'Live stream details not found.');
+            $response =  ATLSP_generateResponse(false,202,'Live stream details not found.');
         }
         return $response;
     }
@@ -183,11 +183,11 @@ class LiveStreamingController
 
         /* Check Validation */
 
-        $validateInputs = RequestValidation($request, 'update');
+        $validateInputs = ATLSP_RequestValidation($request, 'update');
 
          if($validateInputs['status'] == false){
 
-            $response =  generateResponse(false,422,$validateInputs['message'],$validateInputs['data']);
+            $response =  ATLSP_generateResponse(false,422,$validateInputs['message'],$validateInputs['data']);
             return $response;
 
         }
@@ -213,7 +213,7 @@ class LiveStreamingController
             /* Update Wowza Stream */
 
             $url = "/live_streams/$wowza_id";
-            $updateStream = RunApi($url, "PATCH", $inputdata);
+            $updateStream = ATLSP_RunApi($url, "PATCH", $inputdata);
 
             if(isset($updateStream->live_stream)) {
                 $outputData = $updateStream->live_stream;
@@ -232,26 +232,26 @@ class LiveStreamingController
 
                 if($update) {
                     
-                    $response =  generateResponse(true,200,'Live Stream created successully.');
+                    $response =  ATLSP_generateResponse(true,200,'Live Stream created successully.');
 
                 }else{
-                    $response =  generateResponse(false,202,'Live Stream not update please try again.');
+                    $response =  ATLSP_generateResponse(false,202,'Live Stream not update please try again.');
                     
                 }
             }else if(isset($updateStream->meta)) {
                 
-                $response =  generateResponse(fales,202, $updateStream->meta->message);
+                $response =  ATLSP_generateResponse(fales,202, $updateStream->meta->message);
 
             }else{
                 
-                $response =  generateResponse(false,202,'Server Not Responding please try again.');
+                $response =  ATLSP_generateResponse(false,202,'Server Not Responding please try again.');
             }
         }else if(!is_null($singleStream) && $singleStream->state == 'started'){
             
-            $response =  generateResponse(false,202,'Live stream is started, please stop first and then update.');
+            $response =  ATLSP_generateResponse(false,202,'Live stream is started, please stop first and then update.');
         }else{
 
-            $response =  generateResponse(false,202,'Live stream details not found.');
+            $response =  ATLSP_generateResponse(false,202,'Live stream details not found.');
         }
 
         return $response;
@@ -266,14 +266,14 @@ class LiveStreamingController
 
         if(!is_null($singleStream) && $singleStream->state == 'started'){
 
-            $response =  generateResponse(false,202,'Live stream is started, please stop and then after remove.');
+            $response =  ATLSP_generateResponse(false,202,'Live stream is started, please stop and then after remove.');
             return $response;
         }
 
         if(!is_null($singleStream) && $singleStream->state == 'stopped'){
 
             $url = "/live_streams/$wowza_id";
-            $removeStream = RunApi($url, "DELETE");
+            $removeStream = ATLSP_RunApi($url, "DELETE");
             
 
             if($removeStream == null){
@@ -282,25 +282,25 @@ class LiveStreamingController
 
                 if($removeStreamFromDb){
                     
-                    $response =  generateResponse(true,200,'Live stream removed successfully.');
+                    $response =  ATLSP_generateResponse(true,200,'Live stream removed successfully.');
 
                 }else{
 
-                    $response =  generateResponse(false,202,'Live stream is not removed from database, please try again.');
+                    $response =  ATLSP_generateResponse(false,202,'Live stream is not removed from database, please try again.');
                 }
 
             }else if(isset($removeStream->meta)){
                  
-                 $response =  generateResponse(false,$removeStream->meta->status,$removeStream->meta->message);
+                 $response =  ATLSP_generateResponse(false,$removeStream->meta->status,$removeStream->meta->message);
 
             }else{
 
-                $response =  generateResponse(false,202,'Live stream is not removed, please try again.');
+                $response =  ATLSP_generateResponse(false,202,'Live stream is not removed, please try again.');
             }
     
         }else{
     
-            $response =  generateResponse(false,202,'Live stream details not found.');
+            $response =  ATLSP_generateResponse(false,202,'Live stream details not found.');
         }
 
         return $response;   
@@ -313,21 +313,21 @@ class LiveStreamingController
 
         $streamData   = $this->GetSingleLiveStream($stream_id, $wowza_id);
         if(empty($streamData['data'])){
-             $response =  generateResponse(false,202,'Live stream not found.');
+             $response =  ATLSP_generateResponse(false,202,'Live stream not found.');
              return $response;
         }
 
         if(!isset($streamData['data']['wowza_data']->live_stream)){
-            $response =  generateResponse(false,202,$streamData['data']['wowza_data']->meta->message);
+            $response =  ATLSP_generateResponse(false,202,$streamData['data']['wowza_data']->meta->message);
              return $response;
         }
 
         $streamStatusUrl       = "/live_streams/$wowza_id/state";
-        $streamStatusResponce  = RunApi($streamStatusUrl, "GET");
+        $streamStatusResponce  = ATLSP_RunApi($streamStatusUrl, "GET");
         $streamStatus          = $streamStatusResponce->live_stream->state;
             
         if($streamData['status'] == true && isset($streamStatus) && $streamStatus == 'started'){  
-            $response =  generateResponse(false,202,'Live stream already started.');
+            $response =  ATLSP_generateResponse(false,202,'Live stream already started.');
             return $response;
         }
         
@@ -336,18 +336,18 @@ class LiveStreamingController
             /*Live Stream Start Wowza*/
 
             $url = "/live_streams/$wowza_id/start";
-            $liveStream = RunApi($url, "PUT");
+            $liveStream = ATLSP_RunApi($url, "PUT");
 
             do{
                 $streamStatusResponce  = RunApi($streamStatusUrl, "GET");
 
             }while ($streamStatusResponce->live_stream->state != 'started');
             
-            $response =  generateResponse(true,200,'Live stream started successully.');
+            $response =  ATLSP_generateResponse(true,200,'Live stream started successully.');
             
         }else{
         
-            $response =  generateResponse(false,202,'Please Try Again.');
+            $response =  ATLSP_generateResponse(false,202,'Please Try Again.');
         }
 
         return $response;
@@ -360,27 +360,27 @@ class LiveStreamingController
 
         $streamData   = $this->GetSingleLiveStream($stream_id, $wowza_id);
         if(empty($streamData['data'])){
-             $response =  generateResponse(false,202,'Live stream not found.');
+             $response =  ATLSP_generateResponse(false,202,'Live stream not found.');
              return $response;
         }
 
         if(!isset($streamData['data']['wowza_data']->live_stream)){
-            $response =  generateResponse(false,202,$streamData['data']['wowza_data']->meta->message);
+            $response =  ATLSP_generateResponse(false,202,$streamData['data']['wowza_data']->meta->message);
             return $response;
         }
 
         $streamStatusUrl       = "/live_streams/$wowza_id/state";
-        $streamStatusResponce  = RunApi($streamStatusUrl, "GET");
+        $streamStatusResponce  = ATLSP_RunApi($streamStatusUrl, "GET");
         $streamStatus          = $streamStatusResponce->live_stream->state;
         if(isset($streamStatus) && $streamStatus == 'stopped' ){
-            $response =  generateResponse(false,202,'Live Streaming is not started please try again.');
+            $response =  ATLSP_generateResponse(false,202,'Live Streaming is not started please try again.');
             return $response;
         }
 
         if(isset($streamStatus)){
             if($streamStatus == 'started' || $streamStatus == '' ){
                 do{
-                    $streamStatus  = RunApi($streamStatusUrl, "GET");
+                    $streamStatus  = ATLSP_RunApi($streamStatusUrl, "GET");
 
                 } while ($streamStatus->live_stream->state != 'started');
                 
@@ -389,16 +389,16 @@ class LiveStreamingController
                 $update = $this->LiveStreamModel->UpdateData($inputStore,$stream_id,$wowza_id);  
 
 
-                $response =  generateResponse(true,200,'Live stream published.');
+                $response =  ATLSP_generateResponse(true,200,'Live stream published.');
                     
             } else {
                 
-                $response =  generateResponse(false,202,'Live Streaming is not started please try again.');
+                $response =  ATLSP_generateResponse(false,202,'Live Streaming is not started please try again.');
             }
 
         }else{
             
-            $response =  generateResponse(false,202,'Live Streaming is not started please try again.');
+            $response =  ATLSP_generateResponse(false,202,'Live Streaming is not started please try again.');
         }
 
             return $response;
@@ -412,27 +412,27 @@ class LiveStreamingController
         $streamData   = $this->GetSingleLiveStream($stream_id, $wowza_id);
         
         if(empty($streamData['data'])){
-             $response =  generateResponse(false,202,'Live stream not found.');
+             $response =  ATLSP_generateResponse(false,202,'Live stream not found.');
              return $response;
         }
 
         if(!isset($streamData['data']['wowza_data']->live_stream)){
-            $response =  generateResponse(false,202,$streamData['data']['wowza_data']->meta->message);
+            $response =  ATLSP_generateResponse(false,202,$streamData['data']['wowza_data']->meta->message);
             return $response;
         }
 
         $streamStatusUrl       = "/live_streams/$wowza_id/state";
-        $streamStatusResponce  = RunApi($streamStatusUrl,"GET");
+        $streamStatusResponce  = ATLSP_RunApi($streamStatusUrl,"GET");
         $streamStatus          = $streamStatusResponce->live_stream->state;
         
         if(isset($streamStatus) && $streamStatus == 'stopped' ){
-            $response =  generateResponse(false,202,'Live stream already stopped.');
+            $response =  ATLSP_generateResponse(false,202,'Live stream already stopped.');
             return $response;
         }
 
 
         $stopLiveStreamurl          = "/live_streams/$wowza_id/stop";
-        $streamStopData             = RunApi($stopLiveStreamurl,"PUT");
+        $streamStopData             = ATLSP_RunApi($stopLiveStreamurl,"PUT");
 
         if(isset($streamStopData->live_stream) && $streamStopData->live_stream->state == 'stopped'){
     
@@ -442,16 +442,16 @@ class LiveStreamingController
 
             if($updateData){
                     
-                $response =  generateResponse(true,200,'Live stream stopped.');
+                $response =  ATLSP_generateResponse(true,200,'Live stream stopped.');
                 
             }else{
                 
-                $response =  generateResponse(false,202,'Live stream not stopped, please try again.');
+                $response =  ATLSP_generateResponse(false,202,'Live stream not stopped, please try again.');
             }
 
         }else{
 
-            $response =  generateResponse(false,202,$streamStopData->meta->message);
+            $response =  ATLSP_generateResponse(false,202,$streamStopData->meta->message);
         }
 
         return  $response;
@@ -465,20 +465,20 @@ class LiveStreamingController
         $streamData   = $this->GetSingleLiveStream($stream_id, $wowza_id);
 
         if(empty($streamData['data'])){
-             $response =  generateResponse(false,202,'Live stream not found.');
+             $response =  ATLSP_generateResponse(false,202,'Live stream not found.');
              return $response;
         }
 
         if(!isset($streamData['data']['wowza_data']->live_stream)){
-            $response =  generateResponse(false,202,$streamData['data']['wowza_data']->meta->message);
+            $response =  ATLSP_generateResponse(false,202,$streamData['data']['wowza_data']->meta->message);
             return $response;
         }
 
         $ingestUrl    = "/analytics/ingest/live_streams/$wowza_id";
         $viewerUrl    = "/analytics/viewers/live_streams/$wowza_id";
         
-        $ingestoutput = RunApi($ingestUrl, "GET");
-        $vieweroutput = RunApi($viewerUrl, "GET");
+        $ingestoutput = ATLSP_RunApi($ingestUrl, "GET");
+        $vieweroutput = ATLSP_RunApi($viewerUrl, "GET");
 
 
 
@@ -492,10 +492,10 @@ class LiveStreamingController
                 'unique_views' => $vieweroutput->live_stream->viewers
             ];
         
-            $response =  generateResponse(true,200,'Statistic details Found.',$outputData);
+            $response =  ATLSP_generateResponse(true,200,'Statistic details Found.',$outputData);
 
         }else{
-            $response =  generateResponse(false,202,'Statistic details not found.');
+            $response =  ATLSP_generateResponse(false,202,'Statistic details not found.');
         }
 
         return $response;

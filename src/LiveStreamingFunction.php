@@ -35,7 +35,7 @@ class LiveStreamingFunction {
 
         if(!is_array($request)){
              
-            $response = generateResponse(false,422,'Input field must be a valid array.');
+            $response = ATLSP_generateResponse(false,422,'Input field must be a valid array.');
 
             return  $response;
         }
@@ -52,20 +52,20 @@ class LiveStreamingFunction {
 
         if(!is_array($filterData)){
              
-             $response = generateResponse(false,422,'FilterData must be a valid array.');
+             $response = ATLSP_generateResponse(false,422,'FilterData must be a valid array.');
              return  $response;
         }
 
         if(!is_bool($pagination)){
             
-            $response = generateResponse(false,422, 'Pagination must be a valid boolean value.');
+            $response = ATLSP_generateResponse(false,422, 'Pagination must be a valid boolean value.');
             return  $response;
 
         }
 
         if(!is_array($order_by)){
              
-             $response = generateResponse(false,422,'order by must be a valid array.');
+             $response = ATLSP_generateResponse(false,422,'order by must be a valid array.');
              return  $response;
 
         }
@@ -83,7 +83,7 @@ class LiveStreamingFunction {
 
 
         if (!is_numeric($stream_id)) {
-            $response =  generateResponse(false, 422, 'Stream ID must be a valid number.');
+            $response =  ATLSP_generateResponse(false, 422, 'Stream ID must be a valid number.');
             return  $response;
         }
 
@@ -99,12 +99,12 @@ class LiveStreamingFunction {
         
         if(!is_array($request)){
              
-             $response = generateResponse(false,422,'Input field must be a valid array.');
+             $response = ATLSP_generateResponse(false,422,'Input field must be a valid array.');
              return  $response;
         }
 
         if(!isset($stream_id) && !is_numeric($stream_id)){
-            $response =  generateResponse(false,202,'stream id is missing or pass properly.');       
+            $response =  ATLSP_generateResponse(false,202,'stream id is missing or pass properly.');       
             return $response; 
         }
 
@@ -118,7 +118,7 @@ class LiveStreamingFunction {
     public function RemoveLiveStream($stream_id, $wowza_id){
 
         if(!isset($stream_id) && !is_numeric($stream_id)){
-            $response =  generateResponse(false,202,'stream id is missing or pass properly.');       
+            $response =  ATLSP_generateResponse(false,202,'stream id is missing or pass properly.');       
             return $response; 
         }
 
@@ -131,7 +131,7 @@ class LiveStreamingFunction {
     public function StartLiveStream($stream_id, $wowza_id){
         
         if(!isset($stream_id) && !is_numeric($stream_id)){
-            $response =  generateResponse(false,202,'stream id is missing or pass properly.');       
+            $response =  ATLSP_generateResponse(false,202,'stream id is missing or pass properly.');       
             return $response; 
         }
 
@@ -146,7 +146,7 @@ class LiveStreamingFunction {
     public function PublishStream($stream_id, $wowza_id){
     
         if(!isset($stream_id) && !is_numeric($stream_id)){
-            $response =  generateResponse(false,202,'stream id is missing or pass properly.');       
+            $response =  ATLSP_generateResponse(false,202,'stream id is missing or pass properly.');       
             return $response; 
         }
 
@@ -160,7 +160,7 @@ class LiveStreamingFunction {
     public function StopLiveStream($stream_id,$wowza_id){
 
         if(!isset($stream_id) && !is_numeric($stream_id)){
-            $response =  generateResponse(false,202,'stream id is missing or pass properly.');       
+            $response =  ATLSP_generateResponse(false,202,'stream id is missing or pass properly.');       
             return $response; 
         }
 
@@ -175,7 +175,7 @@ class LiveStreamingFunction {
     public function LiveStreamStatistics($stream_id,$wowza_id){
 
         if(!isset($stream_id) && !is_numeric($stream_id)){
-            $response =  generateResponse(false,202,'stream id is missing or pass properly.');       
+            $response =  ATLSP_generateResponse(false,202,'stream id is missing or pass properly.');       
             return $response; 
         }
 
