@@ -29,34 +29,35 @@
 
 
     /* Camera Encoder List Function*/
-
-     function CameraEncoder(){
-        $camera_encoder = [
-			"other_webrtc"				=> "Webrtc",
-			"media_ds"					=> "Media DS",
-			"axis"						=> "Axis",
-			"epiphan"					=> "Epiphan",
-			"hauppauge"					=> "Hauppauge",
-			"jvc"						=> "JVC",
-			"live_u"					=> "Live U",
-			"matrox"					=> "Matrox",
-			"newtek_tricaster"			=> "Newtek Tricaster",
-			"osprey"					=> "Osprey",
-			"sony"						=> "Sony",
-			"telestream_wirecast"		=> "Telestream Wirecast",
-			"teradek_cube"				=> "Teradek Cube",
-			"vmix"						=> "Vmix",
-			"x_split"					=> "X Split",
-			"ipcamera"					=> "ip Camera",
-			"other_rtmp"				=> "Other RTMP",
-			"other_rtsp"				=> "Other RTSP",
-			"other_srt"					=> "Other SRT",
-			"other_udp"					=> "Other UDP",
-			// "file"						=> "File",
-		];
-     
-     	return $camera_encoder;   
-    }
+	if(!function_exists('CameraEncoder') ){
+		function CameraEncoder(){
+			$camera_encoder = [
+				"other_webrtc"				=> "Webrtc",
+				"media_ds"					=> "Media DS",
+				"axis"						=> "Axis",
+				"epiphan"					=> "Epiphan",
+				"hauppauge"					=> "Hauppauge",
+				"jvc"						=> "JVC",
+				"live_u"					=> "Live U",
+				"matrox"					=> "Matrox",
+				"newtek_tricaster"			=> "Newtek Tricaster",
+				"osprey"					=> "Osprey",
+				"sony"						=> "Sony",
+				"telestream_wirecast"		=> "Telestream Wirecast",
+				"teradek_cube"				=> "Teradek Cube",
+				"vmix"						=> "Vmix",
+				"x_split"					=> "X Split",
+				"ipcamera"					=> "ip Camera",
+				"other_rtmp"				=> "Other RTMP",
+				"other_rtsp"				=> "Other RTSP",
+				"other_srt"					=> "Other SRT",
+				"other_udp"					=> "Other UDP",
+				// "file"						=> "File",
+			];
+		
+			return $camera_encoder;   
+		}
+	}
 
 		
 	/* Call Api Using Curl Function*/
