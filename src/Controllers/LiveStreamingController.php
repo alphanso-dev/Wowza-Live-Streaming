@@ -19,7 +19,7 @@ class LiveStreamingController
     public function BroadcastLocationList()
     {
         
-        $broadcastLocationList = BroadcastLocationList();
+        $broadcastLocationList = BroadcastLocation();
         
         $response =  generateResponse(true,200,'Broadcast Location List.',$broadcastLocationList);
         return $response;
@@ -30,7 +30,7 @@ class LiveStreamingController
     public function CameraEncoderList()
     {
         
-        $cameraEncoderList = CameraEncoderList();
+        $cameraEncoderList = CameraEncoder();
         
         $response =  generateResponse(true,200,'Camera Encoder List.',$cameraEncoderList);
         return $response;

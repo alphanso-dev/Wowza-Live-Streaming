@@ -3,34 +3,34 @@
 
 	/* BrodCast Location List */
 
-    function BroadcastLocationList(){
+	if(!function_exists('BroadcastLocation') ){
+		function BroadcastLocation(){
 
-        $broadcast_location = [
-			"asia_pacific_australia"	=> "Asia Pacific Australia",
-			"asia_pacific_india"		=> "Asia Pacific India",
-			"asia_pacific_japan"		=> "Asia Pacific Japan",
-			"asia_pacific_singapore"	=> "Asia Pacific Singapore",
-			"asia_pacific_s_korea"		=> "Asia Pacific South Korea",
-			"asia_pacific_taiwan"		=> "Asia Pacific Taiwan",
-			"eu_belgium"				=> "Europ Belgium",
-			"eu_germany"				=> "Europ Germany",
-			"eu_ireland"				=> "Europ Ireland",
-			"south_america_brazil"		=> "South America Brazil",
-			"us_central_iowa"			=> "US Central Iowa",
-			"us_east_s_carolina"		=> "US East Carolina",
-			"us_east_virginia"			=> "US East Virginia",
-			"us_west_california"		=> "US West California",
-			"us_west_oregon"			=> "US West Oregon"
-		];
- 	
-
- 		return $broadcast_location;
-    }
+			$broadcast_location = [
+				"asia_pacific_australia"	=> "Asia Pacific Australia",
+				"asia_pacific_india"		=> "Asia Pacific India",
+				"asia_pacific_japan"		=> "Asia Pacific Japan",
+				"asia_pacific_singapore"	=> "Asia Pacific Singapore",
+				"asia_pacific_s_korea"		=> "Asia Pacific South Korea",
+				"asia_pacific_taiwan"		=> "Asia Pacific Taiwan",
+				"eu_belgium"				=> "Europ Belgium",
+				"eu_germany"				=> "Europ Germany",
+				"eu_ireland"				=> "Europ Ireland",
+				"south_america_brazil"		=> "South America Brazil",
+				"us_central_iowa"			=> "US Central Iowa",
+				"us_east_s_carolina"		=> "US East Carolina",
+				"us_east_virginia"			=> "US East Virginia",
+				"us_west_california"		=> "US West California",
+				"us_west_oregon"			=> "US West Oregon"
+			];
+			return $broadcast_location;
+		}
+	}
 
 
     /* Camera Encoder List Function*/
 
-     function CameraEncoderList(){
+     function CameraEncoder(){
         $camera_encoder = [
 			"other_webrtc"				=> "Webrtc",
 			"media_ds"					=> "Media DS",
