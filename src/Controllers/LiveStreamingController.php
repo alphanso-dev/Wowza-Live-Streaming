@@ -339,7 +339,7 @@ class LiveStreamingController
             $liveStream = ATLSP_RunApi($url, "PUT");
 
             do{
-                $streamStatusResponce  = RunApi($streamStatusUrl, "GET");
+                $streamStatusResponce  = ATLSP_RunApi($streamStatusUrl, "GET");
 
             }while ($streamStatusResponce->live_stream->state != 'started');
             

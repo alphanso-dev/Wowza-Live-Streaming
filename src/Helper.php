@@ -64,12 +64,12 @@
 
 	if(!function_exists('ATLSP_RunApi') ){
 		function ATLSP_RunApi(string $url, string $method, array $data = []){
-			$wowza_live_stream_api_endpoint = env('LIVESTREAM_ENDPOINT');
+			$wowza_live_stream_api_endpoint = config('livestream.livestream_endpoint');
 	
 			$wowza_live_stream_api_header = [
 				"Content-Type:"  	. "application/json",
 				"charset:"			. "utf-8",
-				"Authorization: Bearer ". env('LIVESTREAM_TOKEN')
+				"Authorization: Bearer ". config('livestream.livestream_token')
 			];
 	
 			$final_url = $wowza_live_stream_api_endpoint.$url;
