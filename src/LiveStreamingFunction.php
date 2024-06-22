@@ -3,6 +3,7 @@
 namespace AlphansoTech\LiveStreaming;
 use AlphansoTech\LiveStreaming\Controllers\LiveStreamingController;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Schema;
 
 class LiveStreamingFunction {
 
