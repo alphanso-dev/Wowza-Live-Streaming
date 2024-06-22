@@ -7,8 +7,16 @@ use Illuminate\Support\Facades\Http;
 class LiveStreamingFunction {
 
      public function __construct(){
-        
+
         $this->LiveStream = new LiveStreamingController();
+
+         if(is_null(config('livestream'))){
+            throw new \Exception("Please publish the configuration file by running 'php artisan vendor:publish --tag=livestream-config'");
+        }
+        if(!Schema::hasTable('live_streamings')){
+             
+            throw new \Exception("Please publish the migration file by running 'php artisan vendor:publish --tag=migrations' and after that run 'php artisan migrate'");
+        }
     }
 
     /* BrodeCast Location List */
