@@ -37,7 +37,7 @@
         }
     }
   ```
-## Available Methods
+## Available Methods 
   ### BroadcastLocationList()
     - Fetches a list of available broadcast locations.
   ### CameraEncoderList()
