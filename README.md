@@ -3,12 +3,10 @@
   ### Installation
 ## You can install the package via Composer. Run the following command in your Laravel project
 - composer require alphanso-tech/livestreaming:dev-main
-## Publish the package migrations
-- php artisan vendor:publish --tag=migrations
+## Publish the package migrations and Config file 
+- php artisan vendor:publish --tag=livestream-assets 
 ## Run migrations to create the necessary database tables :
 - php artisan migrate
-## Publish the config File
-- php artisan vendor:publish --tag=livestream-config
 ## Set the endpoint and live stream token in your .env file
 - LIVESTREAM_ENDPOINT=https://example.com/live-stream-api
 - LIVESTREAM_TOKEN=your-live-stream-token
