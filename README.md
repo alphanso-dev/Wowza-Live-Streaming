@@ -13,7 +13,8 @@
 # Usage
   ## Importing and Using LiveStreamingFunction 
   - In your controller or wherever you need to use the live streaming functionality, import the LiveStreamingFunction class and create an object
-  use AlphansoTech\LiveStreaming\LiveStreamingFunction;
+    - **use AlphansoTech\LiveStreaming\LiveStreamingFunction;**
+  
 
   ```
   class YourController extends Controller
