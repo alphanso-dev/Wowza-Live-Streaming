@@ -14,6 +14,12 @@ class LiveStreamingController
         $this->LiveStreamModel = new LiveStream();
     }
 
+
+    public function HomePage(Request $request){
+        
+        return view('LiveStream::index');
+    }
+
     /* BrodeCast Location List */
 
     public function BroadcastLocationList()
