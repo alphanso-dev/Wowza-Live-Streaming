@@ -3,19 +3,18 @@
   ### Installation
 ## You can install the package via Composer. Run the following command in your Laravel project
 - composer require alphanso-tech/livestreaming:dev-main
-## Publish the package migrations
-- php artisan vendor:publish --tag=migrations
+## Publish the package for migrations, configuration files, and asset files. 
+- php artisan vendor:publish --tag=livestream-assets 
 ## Run migrations to create the necessary database tables :
 - php artisan migrate
-## Publish the config File
-- php artisan vendor:publish --tag=livestream-config
 ## Set the endpoint and live stream token in your .env file
 - LIVESTREAM_ENDPOINT=https://example.com/live-stream-api
 - LIVESTREAM_TOKEN=your-live-stream-token
 # Usage
   ## Importing and Using LiveStreamingFunction 
   - In your controller or wherever you need to use the live streaming functionality, import the LiveStreamingFunction class and create an object
-  use AlphansoTech\LiveStreaming\LiveStreamingFunction;
+    - **use AlphansoTech\LiveStreaming\LiveStreamingFunction;**
+  
 
   ```
   class YourController extends Controller
@@ -24,13 +23,13 @@
     
         public function __construct()
         {
-            $this->LiveStreamingFunction = new LiveStreamingFunction();
+            $this->liveStreaming = new LiveStreamingFunction();
         }
     
         public function index()
         {
             // Example usage of methods from LiveStreamingFunction class
-            $broadcastLocationList = $this->LiveStreamingFunction->BroadcastLocationList();
+            $broadcastLocationList = $this->liveStreaming->BroadcastLocationList();
             $cameraEncoderList = $this->LiveStreamingFunction->CameraEncoderList();
     
             // Use $broadcastLocationList and $cameraEncoderList as needed
@@ -67,9 +66,9 @@
   - **Parameters**
     - filterData: (array) An array of filter criteria to apply to the stream list.
       - **The filterData array can include the following criteria to filter the list of streams**
-        - search_text: (string, optional) Text to search within the stream titles and descriptions.
+        - search_text: (string, optional) Text to search within the stream titles.
         - user_id: (integer, optional) Filter streams by the ID of the user who created them.
-        - stream_status: (string, optional) Filter streams by their status (e.g., 'live', 'upcoming', 'ended').
+        - stream_status: (string, optional) Filter streams by their status (e.g., live = 1 , offline = 0).
   - pagination: (bool) Whether to paginate the results. Defaults to true.
   - limit: (int) The number of results per page when pagination is enabled. Defaults to 10.
   - order_by: (array) An array specifying the column and direction to sort the results. Defaults to ['created_at', 'desc'].
@@ -106,14 +105,14 @@
   - The StreamUpdate function updates the details of an existing live stream based on the provided stream ID and Wowza ID.
   - **Parameters**
     - request: (array, required) An array containing the updated live stream details. The array must include the following fields:
-    - stream_title: (string, required, max: 100) The title of the live stream.
-    - encoder: (string, required) The encoder used for the live stream.
-    - description: (string, nullable, max: 10000) A description of the live stream.
-    - image: (string, required) An image associated with the live stream.
-    - stream_price: (decimal, nullable, format: 0,2) The price of the live stream.
-    - price_currency: (string, required) The currency for the live stream price.
-    - stream_date: (date, required) The date of the live stream.
-    - stream_time: (string, required) The time of the live stream.
+      - stream_title: (string, required, max: 100) The title of the live stream.
+      - encoder: (string, required) The encoder used for the live stream.
+      - description: (string, nullable, max: 10000) A description of the live stream.
+      - image: (string, required) An image associated with the live stream.
+      - stream_price: (decimal, nullable, format: 0,2) The price of the live stream.
+      - price_currency: (string, required) The currency for the live stream price.
+      - stream_date: (date, required) The date of the live stream.
+      - stream_time: (string, required) The time of the live stream.
   - stream_id: (mixed, required) The ID of the live stream to update.
   - wowza_id: (mixed, required) The Wowza ID associated with the live stream.
 
