@@ -7,11 +7,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>AlphansoTech</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+     <link rel="stylesheet" href="{{ asset('vendor/livestream/css/style.css') }}">
 </head>
 
 <body>
     <div class="container">
-        <h1>Welcome To The Alphanso Technology Group.</h1>
+        <h1 class="head_first">Welcome To The Alphanso Technology Group</h1>
     </div>
 </body>
 </html>
+<script src="{{ asset('vendor/livestream/js/custome.js') }}"></script>
+
