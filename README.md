@@ -3,7 +3,7 @@
   ### Installation
 ## You can install the package via Composer. Run the following command in your Laravel project
 - composer require alphanso-tech/livestreaming:dev-main
-## Publish the package migrations and Config file 
+## Publish the package for migrations, configuration files, and asset files. 
 - php artisan vendor:publish --tag=livestream-assets 
 ## Run migrations to create the necessary database tables :
 - php artisan migrate
