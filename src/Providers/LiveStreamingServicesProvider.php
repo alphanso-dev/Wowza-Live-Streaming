@@ -19,14 +19,13 @@ class LiveStreamingServicesProvider extends ServiceProvider
 
         $this->loadViewsFrom(__DIR__.'/../views', 'LiveStream');
         
-        $this->publishes([
-            __DIR__.'/../database/migrations/' => database_path('migrations')
-        ], 'migrations');
-
-
-        $this->publishes([
-            __DIR__.'/../config/livestream.php' => config_path('livestream.php')
-        ], 'livestream-config');
+         $this->publishes([
+            __DIR__.'/../database/migrations/' => database_path('migrations'),
+            __DIR__.'/../config/livestream.php' => config_path('livestream.php'),
+            __DIR__.'/../public/js' => public_path('vendor/livestream/js'),
+            __DIR__.'/../public/css' => public_path('vendor/livestream/css'),
+        ], 'livestream-assets');
+ 
 
         $this->app->singleton(LiveStreamingFunction::class, function(){
             return new LiveStreamingFunction();
