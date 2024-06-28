@@ -22,6 +22,13 @@ class LiveStreamingFunction {
 
     /* BrodeCast Location List */
 
+    
+
+    public function HomePage() {
+    
+         return $this->LiveStream->HomePage();
+    }
+
     public function BroadcastLocationList() {
     
         $response = $this->LiveStream->BroadcastLocationList();
@@ -112,7 +119,7 @@ class LiveStreamingFunction {
              return  $response;
         }
 
-        if(!isset($stream_id) && !is_numeric($stream_id)){
+        if(!isset($stream_id) || !is_numeric($stream_id)){
             $response =  ATLSP_generateResponse(false,202,'stream id is missing or pass properly.');       
             return $response; 
         }
@@ -126,7 +133,7 @@ class LiveStreamingFunction {
 
     public function RemoveLiveStream($stream_id, $wowza_id){
 
-        if(!isset($stream_id) && !is_numeric($stream_id)){
+        if(!isset($stream_id) || !is_numeric($stream_id)){
             $response =  ATLSP_generateResponse(false,202,'stream id is missing or pass properly.');       
             return $response; 
         }
@@ -139,36 +146,24 @@ class LiveStreamingFunction {
 
     public function StartLiveStream($stream_id, $wowza_id){
         
-        if(!isset($stream_id) && !is_numeric($stream_id)){
+        if(!isset($stream_id) || !is_numeric($stream_id)){
             $response =  ATLSP_generateResponse(false,202,'stream id is missing or pass properly.');       
             return $response; 
         }
-
-        $response = $this->LiveStream->StartLiveStream($stream_id, $wowza_id);
-        
-        return $response;        
+        return $this->LiveStream->StartLiveStream($stream_id, $wowza_id);       
     }
+    
     /*Publish Live Stream*/
 
-    
-
     public function PublishStream($stream_id, $wowza_id){
-    
-        if(!isset($stream_id) && !is_numeric($stream_id)){
-            $response =  ATLSP_generateResponse(false,202,'stream id is missing or pass properly.');       
-            return $response; 
-        }
-
-        $response = $this->LiveStream->PublishStream($stream_id, $wowza_id);
-        
-        return $response;        
+        return $this->LiveStream->PublishStream($stream_id, $wowza_id);
     }
 
     /*Sotop Live Stream*/    
 
     public function StopLiveStream($stream_id,$wowza_id){
 
-        if(!isset($stream_id) && !is_numeric($stream_id)){
+        if(!isset($stream_id) || !is_numeric($stream_id)){
             $response =  ATLSP_generateResponse(false,202,'stream id is missing or pass properly.');       
             return $response; 
         }
@@ -183,7 +178,7 @@ class LiveStreamingFunction {
     
     public function LiveStreamStatistics($stream_id,$wowza_id){
 
-        if(!isset($stream_id) && !is_numeric($stream_id)){
+        if(!isset($stream_id) || !is_numeric($stream_id)){
             $response =  ATLSP_generateResponse(false,202,'stream id is missing or pass properly.');       
             return $response; 
         }

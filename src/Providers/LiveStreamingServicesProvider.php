@@ -24,6 +24,7 @@ class LiveStreamingServicesProvider extends ServiceProvider
             __DIR__.'/../config/livestream.php' => config_path('livestream.php'),
             __DIR__.'/../public/js' => public_path('vendor/livestream/js'),
             __DIR__.'/../public/css' => public_path('vendor/livestream/css'),
+            __DIR__.'/../public/wowza' => public_path('vendor/livestream/wowza'),
         ], 'livestream-assets');
  
 
