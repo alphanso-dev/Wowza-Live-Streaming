@@ -318,7 +318,7 @@ class LiveStreamingController
     public function StartLiveStream($stream_id,$wowza_id){
 
         $streamData   = $this->GetSingleLiveStream($stream_id, $wowza_id);
-        
+
         if(empty($streamData['data'])){
              $response =  ATLSP_generateResponse(false,202,'Live stream not found.');
              return $response;
@@ -329,13 +329,21 @@ class LiveStreamingController
              return $response;
         }
 
+
+        $streamingData    =  $streamData['data']['wowza_data']->live_stream;  
+        $getLiveStreaming =  $streamData['data']['stream_detail'];
+
         $streamStatusUrl       = "/live_streams/$wowza_id/state";
         $streamStatusResponce  = ATLSP_RunApi($streamStatusUrl, "GET");
         $streamStatus          = $streamStatusResponce->live_stream->state;
             
         if($streamData['status'] == true && isset($streamStatus) && $streamStatus == 'started'){  
-            $response =  ATLSP_generateResponse(false,202,'Live stream already started.');
-            return $response;
+            // $response =  ATLSP_generateResponse(false,202,'Live stream already started.');
+            
+            // return redirect()->back()->with('error','Live stream already started.');
+            
+            // return $response;
+            return view('LiveStream::index', compact('streamingData', 'getLiveStreaming'));
         }
         
         if($streamData['status'] == true && isset($streamStatus) && $streamStatus == 'stopped'){
@@ -350,11 +358,8 @@ class LiveStreamingController
 
             }while ($streamStatusResponce->live_stream->state != 'started');
             
-            // $response =  ATLSP_generateResponse(true,200,'Live stream started successully.');
             return $this->PublishStream($stream_id, $wowza_id);
-            // return redirect()->route('publish.stream', ['stream_id' => $stream_id, 'wowza_id' => $wowza_id]);
-
-            
+        
         }else{
         
             $response =  ATLSP_generateResponse(false,202,'Please Try Again.');
@@ -406,8 +411,16 @@ class LiveStreamingController
 
                 $streamingData    =  $streamData['data']['wowza_data']->live_stream;  
                 $getLiveStreaming =  $streamData['data']['stream_detail'];
-                
-                return view('LiveStream::index', compact('streamingData', 'getLiveStreaming'));
+                    
+                if(!empty($streamingData) && !empty($getLiveStreaming) ){
+                    
+                    return view('LiveStream::index', compact('streamingData', 'getLiveStreaming'));
+
+                }else{
+
+                    $response =  ATLSP_generateResponse(false,202,'Please try again.');
+                    return $response;
+                }
                     
             } else {
                 

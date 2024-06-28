@@ -14,7 +14,12 @@
 </head>
 
 <body>
-
+    {{-- @if($error = \Session::get('error'))
+        <div class="alert alert-danger">{{ $error }}</div>   
+    @endif
+    @if($success = Session::get('success'))
+        <div class="alert alert-success">{{ $success }}</div>
+    @endif --}}
     <div class="container">
         <h1 class="head_first">Welcome To The Alphanso Live Streaming </h1>
     </div>
