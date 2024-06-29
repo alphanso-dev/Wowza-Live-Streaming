@@ -104,7 +104,8 @@
                                 <div class="row">
                                     <div class="col-10">
                                         <button id="publish-toggle" type="button" class="btn btn-dark btn-flat mr-1 mb-2 " >Play</button>
-                                        <a href="javascript:void(0);" data-id="{{ base64_encode($getLiveStreaming->_id) }}" class="btn btn-danger btn-flat mr-1 mb-2 stopConfirm">Stop & Go Back</a>
+                                        <a href="{{ route('stop.live.stream', ['stream_id' => $getLiveStreaming->stream_id, 'wowza_id' => $getLiveStreaming->wowza_id]) }}" class="btn btn-danger btn-flat mr-1 mb-2 stopConfirm">Stop Live Stream</a>
+
                                     </div>
                                     <?php /* * ?>
                                     <div class="col-2">

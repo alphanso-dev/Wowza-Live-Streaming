@@ -17,7 +17,7 @@ class LiveStreamingServicesProvider extends ServiceProvider
 
         $this->loadRoutesFrom(__DIR__.'/../Routes/web.php');
 
-        $this->loadViewsFrom(__DIR__.'/../views', 'LiveStream');
+        $this->loadViewsFrom(__DIR__.'/../Views', 'LiveStream');
         
          $this->publishes([
             __DIR__.'/../database/migrations/' => database_path('migrations'),
