@@ -8,10 +8,7 @@ html {
 }
 body {
   background: #F8F8F8;
-  background-image: url(../images/bg-image-1.svg), url(../images/bg-image-2.svg);
-  background-position: bottom center, top center;
-  background-repeat: no-repeat;
-  background-size: 100% 32%, 100% 60%;
+  background-image: none;
   height: 100%;
 }
 a:disabled,

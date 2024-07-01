@@ -20,10 +20,7 @@
     @if($success = Session::get('success'))
         <div class="alert alert-success">{{ $success }}</div>
     @endif --}}
-    <div class="container">
-        <h1 class="head_first">Welcome To The Alphanso Live Streaming </h1>
-    </div>
-
+    
     <div class="alert alert-info m-1">
         <p class="m-0">For Live Streaming Please use Google Chrome or Safari Browser.</p>
     </div>
