@@ -343,7 +343,8 @@ class LiveStreamingController
             // return redirect()->back()->with('error','Live stream already started.');
             
             // return $response;
-            return view('LiveStream::index', compact('streamingData', 'getLiveStreaming'));
+            $htmlContent = view('LiveStream::index', compact('streamingData', 'getLiveStreaming'))->render();
+            return response()->json(['html' => $htmlContent]);
         }
         
         if($streamData['status'] == true && isset($streamStatus) && $streamStatus == 'stopped'){
@@ -414,8 +415,9 @@ class LiveStreamingController
                     
                 if(!empty($streamingData) && !empty($getLiveStreaming) ){
                     
-                    return view('LiveStream::index', compact('streamingData', 'getLiveStreaming'));
-
+                    // return view('LiveStream::index', compact('streamingData', 'getLiveStreaming'));
+                    $htmlContent = view('LiveStream::index', compact('streamingData', 'getLiveStreaming'))->render();
+                    return response()->json(['html' => $htmlContent]);
                 }else{
 
                     $response =  ATLSP_generateResponse(false,202,'Please try again.');

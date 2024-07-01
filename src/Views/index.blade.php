@@ -121,29 +121,6 @@
                 </div>
             </div>
         </div>
-        <div class="mt-3 row">
-            <div class="col-sm-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="text-black mb-0">Live Streaming Data</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group mb-4">
-                            <label class="control-label font-weight-bold">Live Streaming Title</label>
-                            <label class="control-label form-control">{{ $getLiveStreaming->stream_title }}</label>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label font-weight-bold">Live Streaming Id</label>
-                            <label class="control-label form-control">{!! $getLiveStreaming->id !!}</label>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label font-weight-bold">Live Streaming Wowza Id</label>
-                            <label class="control-label form-control">{!! $getLiveStreaming->wowza_id !!}</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
     <div>
         <span id="sdpDataTag"></span>
@@ -162,7 +139,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
 
-   {{--  <script type="text/javascript">
+    <script type="text/javascript">
         $(window).on('beforeunload', function(){
             $("#wait").hide();
         });
@@ -175,6 +152,6 @@
             $("#wait").hide();
         });
 
-    </script> --}}
+    </script>
 </body>
 </html>
